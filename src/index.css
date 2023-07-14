@@ -1,69 +1,282 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  /* Colors */
+  --clr-gradient-1: hsl(249, 99%, 64%);
+  --clr-gradient-2: hsl(278, 94%, 30%);
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  --clr-neutral-white: hsl(0, 0%, 100%);
+  --clr-neutral-light-grayish-violet: hsl(270, 3%, 87%);
+  --clr-neutral-dark-grayish-violet: hsl(279, 6%, 55%);
+  --clr-neutral-very-dark-violet: hsl(278, 68%, 11%);
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
+  /* Font Family */
+  --font-family-primary: "Space Grotesk", sans-serif;
+
+  /* Font Weight */
+  --font-weight-regular: 500;
+
+  /* Font Size */
+  --font-size-200: 0.75rem;
+  --font-size-300: 0.875rem;
+  --font-size-400: 1rem;
+  --font-size-500: 1.125rem;
+  --font-size-600: 1.25rem;
+  --font-size-700: 1.5rem;
+  --font-size-800: 1.875rem;
+  --font-size-900: 2.25rem;
+  --font-size-1000: 2.5rem;
+  --font-size-1100: 2.75rem;
+  --font-size-1200: 3rem;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+/* Reset */
+/*  https://piccalil.li/blog/a-modern-css-reset */
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
-a:hover {
-  color: #535bf2;
+
+/* Remove default margin */
+* {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+html,
+body {
+  height: 100%;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture,
+svg {
+  max-width: 100%;
+  display: block;
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* General styling */
+
+body {
+  background-color: var(--clr-neutral-white);
+  color: var(--clr-neutral-off-black);
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-500);
+}
+
+main {
+  display: grid;
+  grid-template-rows: 1fr 2fr;
+  height: 100vh;
+  min-height: 600px;
+}
+
+.card {
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+}
+
+.card-section {
+  background-image: url("./assets/images/bg-main-mobile.png");
+  position: relative;
+}
+
+.front-card {
+  background-image: url("./assets/images/bg-card-front.png");
+  border-radius: 0.5rem;
+  color: var(--clr-neutral-light-grayish-violet);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 320px;
+  height: 180px;
+  transform: translate(10%, 30%);
+  z-index: 2;
+  display: grid;
+  grid-template-rows: 2fr 1fr 1fr;
+  padding: 1.5rem;
+  align-items: center;
+}
+
+.front-card img {
+  width: 70px;
+  align-self: flex-start;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-size-300);
+  text-transform: uppercase;
+}
+
+.back-card {
+  background-image: url("./assets/images/bg-card-back.png");
+  border-radius: 0.5rem;
+  color: var(--clr-neutral-white);
+  font-size: var(--font-size-200);
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 320px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  padding: 2.5rem;
+  transform: translate(-10%, 30%);
+}
+
+form {
+  padding: 4rem 2rem 4rem 2rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 0.5rem;
+  grid-template-areas:
+    "cardHolder cardHolder"
+    "cardNumber cardNumber"
+    "cardExpiration cardCVC"
+    "confirm confirm";
+}
+
+.card-holder {
+  grid-area: cardHolder;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+.card-number {
+  grid-area: cardNumber;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+.card-expiration {
+  grid-area: cardExpiration;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+.card-date {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.3rem;
+}
+
+.card-cvc {
+  grid-area: cardCVC;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+.confirm {
+  grid-area: confirm;
+}
+
+label {
+  color: var(--clr-neutral-very-dark-violet);
+  text-transform: uppercase;
+  font-size: var(--font-size-400);
+  align-self: flex-end;
+}
+
+input {
+  color: var(--clr-neutral-dark-grayish-violet);
+  border-radius: 0.5rem;
+  border: 0.1rem solid var(--clr-neutral-light-grayish-violet);
+  padding: 0.2rem 0.8rem;
+  width: 100%;
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  background-color: var(--clr-neutral-very-dark-violet);
+  color: var(--clr-neutral-white);
+  border: none;
+  border-radius: 1rem;
+  /* padding: 0.5rem 1rem; */
+  text-align: center;
+  height: 50%;
+  align-self: center;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+/* https://codepen.io/sosuke/pen/Pjoqqp */
+/* .red-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  filter: invert(59%) sepia(94%) saturate(3507%) hue-rotate(329deg)
+    brightness(98%) contrast(97%);
+} */
+
+/* Media queries */
+@media (min-width: 60em) {
+  main {
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 3fr;
   }
-  a:hover {
-    color: #747bff;
+  form {
+    align-self: center;
+    justify-self: center;
+    width: 400px;
+    height: 600px;
   }
-  button {
-    background-color: #f9f9f9;
+  .front-card {
+    width: 320px;
+    height: 180px;
+    top: 50%;
+    right: 0;
+    left: 100%;
+    transform: translate(-75%, -125%);
+  }
+
+  .front-card img {
+    width: 70px;
+  }
+
+  .back-card {
+    width: 320px;
+    height: 180px;
+    top: 50%;
+    right: 0;
+    transform: translate(50%, 0);
   }
 }

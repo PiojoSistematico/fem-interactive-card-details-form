@@ -1,35 +1,58 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
+import { useState } from "react";
+import completeIcon from "./assets/images/icon-complete.svg";
+import cardLogo from "./assets/images/card-logo.svg";
 function App() {
-  const [count, setCount] = useState(0)
+  const [isCompleted, setIsCompleted] = useState(true);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <main>
+      <section className="card card-section">
+        <div className="card front-card">
+          <img src={cardLogo} alt="" />
+          <h1>0000 0000 0000 0000</h1>
+          <div className="flex-between">
+            <h2>Jane Appleseed</h2>
+            <span>00/00</span>
+          </div>
+        </div>
+        <div className="card back-card">000</div>
+      </section>
+      {isCompleted ? (
+        <form action="">
+          <div className="card-holder">
+            <label htmlFor="">Cardholder Name</label>
+            <input type="text" placeholder="e.g. Jane Appleseed" />
+          </div>
+          <div className="card-number">
+            <label htmlFor="">Card Number</label>
+            <input type="text" placeholder="e.g. 1234 5678 9123 0000" />
+          </div>
+          <div className="card-expiration">
+            <label htmlFor="">Exp. Date (MM/YY)</label>
+            <div className="card-date">
+              <input type="text" placeholder="MM" />
+              <input type="text" placeholder="YY" />
+            </div>
+          </div>
+          <div className="card-cvc">
+            <label htmlFor="">CVC</label>
+            <input type="text" placeholder="e.g. 123" />
+          </div>
+
+          <button className="confirm">Confirm</button>
+        </form>
+      ) : (
+        <section className="complete-section">
+          <div>
+            <img src={completeIcon} alt="" />
+            <p>Thank you!</p>
+            <p>We've added your card details</p>
+            <button>Continue</button>
+          </div>
+        </section>
+      )}
+    </main>
+  );
 }
 
-export default App
+export default App;
