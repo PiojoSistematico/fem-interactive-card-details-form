@@ -2,7 +2,27 @@ import { useState } from "react";
 import completeIcon from "./assets/images/icon-complete.svg";
 import cardLogo from "./assets/images/card-logo.svg";
 function App() {
-  const [isCompleted, setIsCompleted] = useState(true);
+  const [isCompleted, setIsCompleted] = useState(false);
+
+  const [cardData, setCardData] = useState({
+    cardName: "",
+    cardNumber: "",
+    cardExpirationDay: "",
+    cardExpirationMonth: "",
+    cardCVC: "",
+  });
+
+  function handleChange(e): void {
+    console.log(e);
+  }
+
+  function handleSubmit(e): void {
+    console.log(e);
+  }
+
+  function handleContinue(e): void {
+    console.log(e);
+  }
 
   return (
     <main>
@@ -43,12 +63,12 @@ function App() {
         </form>
       ) : (
         <section className="complete-section">
-          <div>
-            <img src={completeIcon} alt="" />
-            <p>Thank you!</p>
-            <p>We've added your card details</p>
-            <button>Continue</button>
+          <img src={completeIcon} alt="" className="icon-complete" />
+          <div className="thanks">
+            <p className="thanks-title">Thank you!</p>
+            <p className="thanks-paragraph">We've added your card details</p>
           </div>
+          <button className="continue">Continue</button>
         </section>
       )}
     </main>
