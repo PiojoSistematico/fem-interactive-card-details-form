@@ -184,27 +184,32 @@ form {
 }
 
 .card-holder {
+  position: relative;
   grid-area: cardHolder;
   display: grid;
   grid-template-rows: 1fr 1fr;
 }
 .card-number {
+  position: relative;
   grid-area: cardNumber;
   display: grid;
   grid-template-rows: 1fr 1fr;
 }
 .card-expiration {
+  position: relative;
   grid-area: cardExpiration;
   display: grid;
   grid-template-rows: 1fr 1fr;
 }
 .card-date {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.3rem;
 }
 
 .card-cvc {
+  position: relative;
   grid-area: cardCVC;
   display: grid;
   grid-template-rows: 1fr 1fr;
@@ -223,9 +228,36 @@ label {
 input {
   color: var(--clr-neutral-dark-grayish-violet);
   border-radius: 0.5rem;
-  border: 0.1rem solid var(--clr-neutral-light-grayish-violet);
+  border: 1px solid var(--clr-neutral-light-grayish-violet);
   padding: 0.2rem 0.8rem;
   width: 100%;
+  outline: none;
+}
+
+.noShow {
+  display: none;
+}
+
+.showError {
+  position: absolute;
+  color: red;
+  left: 0;
+  bottom: -1.5rem;
+  font-size: var(--font-size-300);
+}
+
+input:hover,
+input:focus-visible {
+  border: 1px solid var(--clr-gradient-1);
+}
+
+.input-error {
+  border: 1px solid red;
+}
+
+button:hover,
+button:focus-visible {
+  opacity: 0.7;
 }
 
 .confirm {
@@ -233,11 +265,11 @@ input {
   color: var(--clr-neutral-white);
   border: none;
   border-radius: 1rem;
-  /* padding: 0.5rem 1rem; */
   text-align: center;
   height: 50%;
   align-self: center;
   width: 100%;
+  cursor: pointer;
 }
 
 .complete-section {

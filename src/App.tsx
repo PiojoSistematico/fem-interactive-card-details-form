@@ -1,45 +1,57 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import completeIcon from "./assets/images/icon-complete.svg";
 import cardLogo from "./assets/images/card-logo.svg";
 import validateCreditCard from "./helpers/validateCreditCard";
 
+const dummyCard = {
+  cardName: "",
+  cardNumber: "",
+  cardExpirationMonth: "",
+  cardExpirationYear: "",
+  cardCVC: "",
+};
+
+/* const dummyCard = {
+  cardName: "Jane Appleseed",
+  cardNumber: "0000000000000000",
+  cardExpirationMonth: "02",
+  cardExpirationYear: "25",
+  cardCVC: "123",
+}; */
+
 function App() {
   const [isCompleted, setIsCompleted] = useState(false);
+  const [cardData, setCardData] = useState(dummyCard);
 
-  const [cardData, setCardData] = useState({
-    cardName: "Jane Appleseed",
-    cardNumber: "0000000000000000",
-    cardExpirationMonth: "MM",
-    cardExpirationYear: "YY",
-    cardCVC: "123",
-  });
+  // Add a state variable to track if any input field was touched
+  const [isTouched, setIsTouched] = useState(false);
 
-  function handleChange(e): void {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
+    // Mark the form as touched when any input is changed
+    setIsTouched(true);
+
     setCardData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
   }
 
-  function handleSubmit(e): void {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
-    console.log(e);
     const allFieldsValid = Object.values(validateCreditCard(cardData)).every(
       (elem) => elem == true
     );
-    allFieldsValid ? setIsCompleted(true) : console.log("Wrong");
+    if (allFieldsValid) setIsCompleted(true);
   }
 
-  function handleContinue(e): void {
+  function handleContinue(): void {
     setIsCompleted(false);
-    setCardData({
-      cardName: "Jane Appleseed",
-      cardNumber: "0000000000000000",
-      cardExpirationMonth: "MM",
-      cardExpirationYear: "YY",
-      cardCVC: "123",
-    });
+    setCardData(dummyCard);
+    // Reset the touched state when continuing
+    setIsTouched(false);
   }
+
+  const validation = validateCreditCard(cardData);
 
   return (
     <main>
@@ -76,7 +88,16 @@ function App() {
               name="cardName"
               placeholder="e.g. Jane Appleseed"
               onChange={handleChange}
+              className={isTouched && !validation.cardName ? "input-error" : ""}
             />
+            {isTouched && cardData.cardName === "" ? (
+              <span className="showError">Can not be blank</span>
+            ) : (
+              isTouched &&
+              !validation.cardName && (
+                <span className="showError">Please provide a valid name</span>
+              )
+            )}
           </div>
           <div className="card-number">
             <label htmlFor="">Card Number</label>
@@ -85,7 +106,18 @@ function App() {
               name="cardNumber"
               placeholder="e.g. 1234 5678 9123 0000"
               onChange={handleChange}
+              className={
+                isTouched && !validation.cardNumber ? "input-error" : ""
+              }
             />
+            {isTouched && cardData.cardNumber === "" ? (
+              <span className="showError">Can not be blank</span>
+            ) : (
+              isTouched &&
+              !validation.cardNumber && (
+                <span className="showError">Wrong format</span>
+              )
+            )}
           </div>
           <div className="card-expiration">
             <label htmlFor="">Exp. Date (MM/YY)</label>
@@ -95,13 +127,34 @@ function App() {
                 name="cardExpirationMonth"
                 placeholder="MM"
                 onChange={handleChange}
+                className={
+                  isTouched && !validation.cardExpirationMonth
+                    ? "input-error"
+                    : ""
+                }
               />
               <input
                 type="text"
                 name="cardExpirationYear"
                 placeholder="YY"
                 onChange={handleChange}
+                className={
+                  isTouched && !validation.cardExpirationYear
+                    ? "input-error"
+                    : ""
+                }
               />
+              {isTouched &&
+              (cardData.cardExpirationMonth === "" ||
+                cardData.cardExpirationYear === "") ? (
+                <span className="showError">Can not be blank</span>
+              ) : (
+                isTouched &&
+                (!validation.cardExpirationMonth ||
+                  !validation.cardExpirationYear) && (
+                  <span className="showError">Numbers only</span>
+                )
+              )}
             </div>
           </div>
           <div className="card-cvc">
@@ -111,7 +164,16 @@ function App() {
               name="cardCVC"
               placeholder="e.g. 123"
               onChange={handleChange}
+              className={isTouched && !validation.cardCVC ? "input-error" : ""}
             />
+            {isTouched && cardData.cardCVC === "" ? (
+              <span className="showError">Can not be blank</span>
+            ) : (
+              isTouched &&
+              !validation.cardCVC && (
+                <span className="showError">Numbers only</span>
+              )
+            )}
           </div>
 
           <button className="confirm">Confirm</button>
